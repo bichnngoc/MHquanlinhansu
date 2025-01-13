@@ -165,7 +165,7 @@
 							<!--Insert your DB configuration-->
 							<jdbc>
 								<driver>org.postgresql.Driver</driver>
-								<url>jdbc:postgresql://localhost:5432/QuanLiNhanSu</url>
+								<url>jdbc:postgresql://localhost:5432/EmployeeManagement</url>
 								<user>postgres</user>
 								<password>123</password>
 							</jdbc>

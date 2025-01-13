@@ -11,34 +11,46 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NhanVienRequest {
+public class EmployeeRequest {
+    Long id;
+
     @NotBlank(message = "Address must not be empty")
-    String diaChi;
+    String address;
+
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email must not be empty")
     String email;
+
     @NotBlank(message = "Gender must not be empty")
-    String gioiTinh;
+    String gender;
+
     @NotBlank(message = "Education level must not be empty")
-    String hocVan;
+    String education;
+
     @NotNull(message = "Date of birth must not be null")
     @Past(message = "Date of birth must be in the past")
-    LocalDate ngaySinh;
+    LocalDate birthDate;
+
     @NotNull(message = "Hire date must not be null")
     @PastOrPresent(message = "Hire date must be today or in the past")
-    LocalDate ngayTuyenDung;
+    LocalDate recruitmentDate;
+
     @NotBlank(message = "Phone number must not be empty")
     @Pattern(regexp = "^(\\+84|0)\\d{9,10}$", message = "Invalid phone number")
-    String soDienThoai;
+    String phoneNumber;
+
     @NotBlank(message = "Employee name must not be empty")
-    String tenNhanVien;
+    String employeeName;
+
     @NotNull(message = "Position ID must not be null")
     @Positive(message = "Position ID must be a positive number")
-    Long idChucVu;
+    Long idPosition;
+
     @NotNull(message = "Department ID must not be null")
     @Positive(message = "Department ID must be a positive number")
-    Long idPhongBan;
+    Long idDepartment;
+
     @NotNull(message = "Salary ID must not be null")
     @Positive(message = "Salary ID must be a positive number")
-    Long idTienLuong;
+    Long idSalary;
 }

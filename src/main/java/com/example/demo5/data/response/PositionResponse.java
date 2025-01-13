@@ -8,8 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TienLuongResponse {
+public class PositionResponse {
     Long id;
-    Integer bacLuong;
-    Long mucLuong;
+    String positionName;
 }

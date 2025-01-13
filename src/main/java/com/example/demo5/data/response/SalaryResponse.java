@@ -8,7 +8,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PhongBanResponse {
-  Long id;
-  String tenPhongBan;
+public class SalaryResponse {
+    Long id;
+    Integer salaryGrade;
+    Long salaryAmount;
 }
