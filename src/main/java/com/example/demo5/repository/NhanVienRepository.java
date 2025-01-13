@@ -17,4 +17,5 @@ public interface NhanVienRepository {
     Page<NhanVien> getNhanVien(Pageable pageable);
     Page<NhanVien> searchNhanVien(List<FilterCondition> conditions, Pageable pageable);
     long countNhanVien();
+
 }

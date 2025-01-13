@@ -3,13 +3,14 @@ package com.example.demo5.controller;
 import com.example.demo5.Service.NhanVienService;
 import com.example.demo5.data.request.FilterCondition;
 import com.example.demo5.data.request.NhanVienRequest;
+import com.example.demo5.data.response.ApiResponse;
 import com.example.demo5.data.response.NhanVienResponse;
 import com.example.demo5.data.response.PageResponse;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,36 +26,48 @@ public class NhanVienController {
     NhanVienService nhanVienService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<NhanVienResponse> getById(@PathVariable long id) {
-        return ResponseEntity.ok(nhanVienService.getById(id));
+    public ApiResponse<NhanVienResponse> getById(@PathVariable long id) {
+        ApiResponse<NhanVienResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(nhanVienService.getById(id));
+        return apiResponse;
     }
 
     @GetMapping("/page-nhanvien")
-    public ResponseEntity<PageResponse<NhanVienResponse>> getNhanVienPage(Pageable pageable) {
-        return ResponseEntity.ok(nhanVienService.getPageNhanVien(pageable));
+    public ApiResponse<PageResponse<NhanVienResponse>> getNhanVienPage(Pageable pageable) {
+        ApiResponse<PageResponse<NhanVienResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(nhanVienService.getPageNhanVien(pageable));
+        return apiResponse;
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PageResponse<NhanVienResponse>> searchNhanVien(@RequestBody List<FilterCondition> filterConditions, Pageable pageable) {
-        return ResponseEntity.ok(nhanVienService.searchNhanVien(filterConditions, pageable));
+    public ApiResponse<PageResponse<NhanVienResponse>> searchNhanVien(@RequestBody List<FilterCondition> filterConditions, Pageable pageable) {
+        ApiResponse<PageResponse<NhanVienResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(nhanVienService.searchNhanVien(filterConditions, pageable));
+        return apiResponse;
     }
 
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addNhanVien(@RequestBody NhanVienRequest nhanVienRequest) {
+    public ApiResponse<Void> addNhanVien(@RequestBody  @Valid NhanVienRequest nhanVienRequest) {
         nhanVienService.save(nhanVienRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        ApiResponse<Void> apiResponse = new ApiResponse<>();
+        apiResponse.setMessage("Employee created successfully");
+        return apiResponse;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NhanVienResponse> updateNhanVien(@PathVariable Long id, @RequestBody NhanVienRequest nhanVienRequest) {
+    public ApiResponse<NhanVienResponse> updateNhanVien(@PathVariable Long id, @RequestBody NhanVienRequest nhanVienRequest) {
         NhanVienResponse nhanVienResponse = nhanVienService.update(nhanVienRequest,id);
-        return ResponseEntity.ok(nhanVienResponse);
+        ApiResponse<NhanVienResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(nhanVienResponse);
+        return apiResponse;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNhanVien(@PathVariable Long id) {
+    public ApiResponse<Void> deleteNhanVien(@PathVariable Long id) {
         nhanVienService.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        ApiResponse<Void> apiResponse = new ApiResponse<>();
+        apiResponse.setMessage("Employee deleted successfully");
+        return apiResponse;
     }
 }
