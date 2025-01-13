@@ -8,4 +8,5 @@ public interface ChucVuRepository {
     void save(ChucVu chucVu);
     ChucVu findById(Long id);
     List<ChucVu> findAll();
+    List<ChucVu> findAllByListChucVuId(List<Long> chucVuIds);
 }

@@ -7,4 +7,5 @@ public interface TienLuongRepository {
     void save(TienLuong tienLuong);
     TienLuong findById(Long id);
     List<TienLuong> findAll();
+    List<TienLuong> findAllByListTLId(List<Long> tienLuongIds);
 }

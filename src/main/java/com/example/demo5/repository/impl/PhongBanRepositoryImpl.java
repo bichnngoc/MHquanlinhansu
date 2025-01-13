@@ -11,6 +11,8 @@ import test.generated.tables.pojos.PhongBan;
 
 import java.util.List;
 
+import static test.generated.Tables.PHONG_BAN;
+
 @Repository
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @RequiredArgsConstructor
@@ -29,8 +31,15 @@ public class PhongBanRepositoryImpl implements PhongBanRepository {
 
     @Override
     public PhongBan findById(Long id) {
-        return dslContext.selectFrom(Tables.PHONG_BAN)
-                .where(Tables.PHONG_BAN.ID.eq(id))
+        return dslContext.selectFrom(PHONG_BAN)
+                .where(PHONG_BAN.ID.eq(id))
                 .fetchOneInto(PhongBan.class);
+    }
+
+    @Override
+    public List<PhongBan> findAllByListPBId(List<Long> phongBanIds) {
+        return dslContext.selectFrom(PHONG_BAN)
+                .where(PHONG_BAN.ID.in(phongBanIds))
+                .fetchInto(PhongBan.class);
     }
 }

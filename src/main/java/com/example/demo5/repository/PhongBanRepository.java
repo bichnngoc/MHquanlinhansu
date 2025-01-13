@@ -8,5 +8,5 @@ public interface PhongBanRepository {
     void save(PhongBan phongBan);
     List<PhongBan> findAll();
     PhongBan findById(Long id);
-
+    List<PhongBan> findAllByListPBId(List<Long> phongBanIds);
 }

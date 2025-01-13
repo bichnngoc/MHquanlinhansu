@@ -1,14 +1,19 @@
 package com.example.demo5.controller;
 
 import com.example.demo5.Service.NhanVienService;
+import com.example.demo5.data.request.FilterCondition;
+import com.example.demo5.data.request.NhanVienRequest;
 import com.example.demo5.data.response.NhanVienResponse;
+import com.example.demo5.data.response.PageResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,12 +24,37 @@ import java.util.List;
 public class NhanVienController {
     NhanVienService nhanVienService;
 
-    @GetMapping("/list")
-    public List<NhanVienResponse> getAllNhanVien() {
-        return nhanVienService.getAllNhanVien();
+    @GetMapping("/{id}")
+    public ResponseEntity<NhanVienResponse> getById(@PathVariable long id) {
+        return ResponseEntity.ok(nhanVienService.getById(id));
     }
-    @GetMapping("/list2")
-    public List<NhanVienResponse> getAllNhanVien2() {
-        return  nhanVienService.listNhanVien();
+
+    @GetMapping("/page-nhanvien")
+    public ResponseEntity<PageResponse<NhanVienResponse>> getNhanVienPage(Pageable pageable) {
+        return ResponseEntity.ok(nhanVienService.getPageNhanVien(pageable));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<PageResponse<NhanVienResponse>> searchNhanVien(@RequestBody List<FilterCondition> filterConditions, Pageable pageable) {
+        return ResponseEntity.ok(nhanVienService.searchNhanVien(filterConditions, pageable));
+    }
+
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> addNhanVien(@RequestBody NhanVienRequest nhanVienRequest) {
+        nhanVienService.save(nhanVienRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NhanVienResponse> updateNhanVien(@PathVariable Long id, @RequestBody NhanVienRequest nhanVienRequest) {
+        NhanVienResponse nhanVienResponse = nhanVienService.update(nhanVienRequest,id);
+        return ResponseEntity.ok(nhanVienResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNhanVien(@PathVariable Long id) {
+        nhanVienService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
